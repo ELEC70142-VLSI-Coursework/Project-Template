@@ -6,10 +6,10 @@ The floorplan specifies the padring, power planning, and required clocking resou
 
 #### Directory Structure
 
-- `SYNTH/`: Genus synthesis flow folder
+- `synth/`: Genus synthesis flow folder
     - `genus_synth.tcl`: Synthesis script
     - `genus_dft.tcl`: Scan chain insertion script
-- `LAYOUT/`: Innovus place-and-route flow folder
+- `layout/`: Innovus place-and-route flow folder
     - `innovus_pnr.tcl`: PnR flow script
     - `DATA/`:
         - `TOP.v`: Top-level module with padring and PLL
@@ -29,7 +29,7 @@ The floorplan already includes an instance of the PLL module and implements the 
 
 #### Clock Source Selection
 
-- The Two clock sources are available: an external clock via pad and a PLL-generated clock. The external signal `clk_sel` selects between them using a MUX instantiated in the TOP module. Manual instantiation is required since the TOP module is not synthesized. The cell used is the 2-to-1 clock multiplexer `CKMUX2D1BWP7T`. This is not glitch-safe, but dynamic switching is not required for this application.
+- Two clock sources are available: an external clock via pad and a PLL-generated clock. The external signal `clk_sel` selects between them using a MUX instantiated in the TOP module. The cell used is the 2-to-1 clock multiplexer `CKMUX2D1BWP7T`. This is not glitch-safe, but dynamic switching is not required for this application.
 - Only static clock source selection is supported. Dynamic switching may introduce clock glitches. Ensure the desired clock source is selected before powering up the IC.
 
 
@@ -44,7 +44,7 @@ Follow these guidelines during the Place and Route flow:
 ### Required Files
 - `TOP.v`: The top-level module for the IC. It instantiates the IO cells, pads, PLL module, and clock selection logic, and manages their connections.
 - Floorplan files: Specify IO pad placement, power planning, and PLL macro placement.
-- PLL LEF: Defines the PLL module geometry and pin locations. The GDS file is needed for generating the final GDS output.
+- PLL design files: the LEF defines the PLL module geometry and pin locations. The GDS file is needed for generating the final GDS output.
 
 ### TOP File Configuration
 - Instantiate your design and connect it to the IO pads:
@@ -68,5 +68,5 @@ Follow these guidelines during the Place and Route flow:
       create_clock -name "clk" -period 3.0 -waveform {0.0 1.5} [get_pins CLK_EXT/C]
       create_clock -name "pll_clk" -period 3.0 -waveform {0.0 1.5} [get_pins pll/f_out]
       ```
-
+- Modify and extend the script as required by the design.
 
