@@ -23,7 +23,7 @@ The provided floorplan implements a padring with 44 IOs, including 25 freely usa
 The floorplan already includes an instance of the PLL module and implements the initial power planning. Power stripes are not included and should be added after placing the SRAM or other macro blocks.
 
 <div align="center">
-    <img src="./docs/imgs/floorplan.png" alt="Padframe layout" style="width:400px;">
+    <img src="./docs/imgs/floorplan.PNG" alt="Padframe layout" style="width:400px;">
     <img src="./docs/imgs/padframe_layout.PNG" alt="Padframe layout" style="width:400px;">
 </div>
 
