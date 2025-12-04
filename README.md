@@ -1,5 +1,7 @@
 # ELEC70142 Digital VLSI Design Project
 
+Version 1.1 4 December 2025
+
 This repository provides source files and step-by-step guidelines for synthesis and place-and-route flows for the ELEC70142 Digital VLSI Design project.  
 All projects must use the supplied floorplan to ensure compatibility with packaging.  
 The floorplan specifies the padring, power planning, and required clocking resources.
@@ -70,3 +72,30 @@ Follow these guidelines during the Place and Route flow:
       ```
 - Modify and extend the script as required by the design.
 
+---
+### Deliverables
+---
+
+All deliverables must be via your Team's project repo.   The name of the repo has your team number and your project name (e.g. **Team 1 - ARIA**), and is private to your team, but accessible by myself (pykc) and your academic supervisor.  All deliverables **must be** in the repo by *__mid-night Sunday 4 January 2026__* when all coursework team repos must be frozen.  
+
+Deliverables must include the following:
+1. A `README.md` file in the root directory that briefly describe what your team has achieved. This is a **joint statement** for the team. 
+2. Each individual's **personal statement** explaining what you contributed, reflection about what you have learned in this project, mistakes you have made, special design decisons, and what you might do differently if you were to do it again or have more time.  This statement must be succinct and to the point, yet must include sufficient details for me to check against the commit history of the repo so that any claims can be verified. Including links to a selection of specific commits which demonstrate your work would be most helpful. If you work with another member of your group on a module, make sure to give them [co-author credit](https://docs.github.com/en/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/creating-a-commit-with-multiple-authors#creating-co-authored-commits-on-the-command-line). Additionally, try to make meaningful commit messages.
+3. A folder called `rtl` with the source of your processor. If you have multiple versions due to the stretched goals, you may use multiple branches. Your `README.md` file must provide sufficient explanation for me to understand what you have done and how to find your work on all branches you wish to be assessed.  The `rtl` folder should also include a `README.md` file listing who wrote which module/file.
+4. A folder called 'veification' which includes everything required to verify your team's design by running ONLY scripts.  You should also include evidence of your chip working as intended.  This should also include test vector files to be submitted with the design for post-fabrication check by TSMC or IMED.
+5. A detailed test plan - assuming that your team's design is fabricated adn returned in late May or early June, how will this chip be tested either by your team or by another team.
+6. A folder called 'tapeout' which includes all files needed to be sent to IMEC/Europractice for tapeout. 
+***Luca, what do we need for this?***
+
+You must also provide a Makefile or a shell script that allows me and my teaching team to build your chip  and run the testbench to repeat what you have done.
+<br>
+___
+
+## Assessment Criteria
+___
+
+Assessment for this coursework, which accounts for 40% of the entire two-terms module, is divided into two components with equal weighting:
+1. Team achievement- This component of the marks is common to all team members and is dependent on the overall achievement of the team.
+2. Individual achievement - This component of the marks is awarded to individual student based on declaration by the team of the individual contribution, with verification based on evidence (e.g. based on the git commit and push profile of an individual), individual account of his/her contributions and reflections, and the actual deliverables by the individual.
+
+<br>
