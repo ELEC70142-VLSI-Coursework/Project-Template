@@ -84,8 +84,8 @@ Deliverables must include the following:
 3. A folder called `rtl` with the source of your processor. If you have multiple versions due to the stretched goals, you may use multiple branches. Your `README.md` file must provide sufficient explanation for me to understand what you have done and how to find your work on all branches you wish to be assessed.  The `rtl` folder should also include a `README.md` file listing who wrote which module/file.
 4. A folder called 'veification' which includes everything required to verify your team's design by running ONLY scripts.  You should also include evidence of your chip working as intended.  This should also include test vector files to be submitted with the design for post-fabrication check by TSMC or IMED.
 5. A detailed test plan - assuming that your team's design is fabricated adn returned in late May or early June, how will this chip be tested either by your team or by another team.
-6. A folder called 'tapeout' which includes all files needed to be sent to IMEC/Europractice for tapeout. 
-***Luca, what do we need for this?***
+6. A folder called 'tapeout' which includes the final GDSII file needed to be sent to IMEC/Europractice for tapeout. This GDSII file must be extracted from Virtuoso **after** the design has passed DRC and LVS checks with Calibre. 
+
 
 You must also provide a Makefile or a shell script that allows me and my teaching team to build your chip  and run the testbench to repeat what you have done.
 <br>
