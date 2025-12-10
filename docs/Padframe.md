@@ -10,7 +10,7 @@ The padframe consists of 48 bond pads arranged in a square, with 12 pads per sid
 ## Padframe composition 
 
 ### IO Cells
-The padframe uses the TSMC `tphn65lpnv2od3_sl_9lm` library. The primary digital I/O cell is `PDUW0812SCDG`, which provides Schmitt Trigger inputs and an enable-controlled pull-up resistor. This cell is used for all general-purpose I/O, clock, reset, scan chain, and PLL frequency selection pads, each configured for 8 mA drive strength.
+The padframe uses the TSMC `tphn65lpnv2od3_sl_9lm` library. The primary digital I/O cell is `PDUW0408SCDG`, which provides Schmitt Trigger inputs and an enable-controlled pull-up resistor. This cell is used for all general-purpose I/O, clock, reset, scan chain, and PLL frequency selection pads, each configured for 8 mA drive strength.
 
 Oscillator signals use the `PXOE2CDG` cell, selected for its specific drive strength and signal gain characteristics.
 
@@ -26,18 +26,18 @@ This arrangement ensures robust signal integrity, ESD protection, and compliance
 ### Padring Cells
 | Function       | Pads Cells | IO Library Cell   | Description                                                                 |
 |----------------|-------------|-------------------|-----------------------------------------------------------------------------|
-| GPIOxx         | 25          | `PDUW0812SCDG`   | Freely usable IO configurable as Input/Output with Pull-Up resistor.        |
-| CLK_EXT        | 1           | `PDUW0812SCDG`   | External clock input pad.                                                   |
-| CLK_SEL        | 1           | `PDUW0812SCDG`   | Clock select input pad.                                                     |
-| CLK_OUT        | 1           | `PDUW0812SCDG`   | Clock output pad.                                                           |
-| RESET_N        | 1           | `PDUW0812SCDG`   | Active-low reset input pad.                                                 |
-| SCAN_EN        | 1           | `PDUW0812SCDG`   | Scan enable input pad.                                                      |
-| SCAN_TSTMD     | 1           | `PDUW0812SCDG`   | Scan test mode input pad.                                                   |
-| SCAN_DI        | 1           | `PDUW0812SCDG`   | Scan data input pad.                                                        |
-| SCAN_DO        | 1           | `PDUW0812SCDG`   | Scan data output pad.                                                       |
+| GPIOxx         | 25          | `PDUW0408SCDG`   | Freely usable IO configurable as Input/Output with Pull-Up resistor.        |
+| CLK_EXT        | 1           | `PDUW0408SCDG`   | External clock input pad.                                                   |
+| CLK_SEL        | 1           | `PDUW0408SCDG`   | Clock select input pad.                                                     |
+| CLK_OUT        | 1           | `PDUW0408SCDG`   | Clock output pad.                                                           |
+| RESET_N        | 1           | `PDUW0408SCDG`   | Active-low reset input pad.                                                 |
+| SCAN_EN        | 1           | `PDUW0408SCDG`   | Scan enable input pad.                                                      |
+| SCAN_TSTMD     | 1           | `PDUW0408SCDG`   | Scan test mode input pad.                                                   |
+| SCAN_DI        | 1           | `PDUW0408SCDG`   | Scan data input pad.                                                        |
+| SCAN_DO        | 1           | `PDUW0408SCDG`   | Scan data output pad.                                                       |
 | PLL_CLK_I      | 1           | `PXOE2CDG`       | PLL clock input pad.                                                        |
 | PLL_CLK_O      | 1           | `PXOE2CDG`       | PLL clock output pad.                                                       |
-| PLL_CTRL[3:0]  | 4           | `PDUW0812SCDG`   | PLL control input pads for frequency selection.                             |
+| PLL_CTRL[3:0]  | 4           | `PDUW0408SCDG`   | PLL control input pads for frequency selection.                             |
 | PLL_BIAS_1     | 1           | `PVDD2ANA`       | PLL bias voltage pad 1.                                                     |
 | PLL_BIAS_2     | 1           | `PVDD2ANA`       | PLL bias voltage pad 2.                                                     |
 | VDD_CORE       | 2           | `PVDD1CDG`       | Core power supply pads.                                                     |
@@ -71,7 +71,7 @@ Refer to the [Bondpad library release note] for further details.
 ### Signal Integrity and ESD
 
 - The padframe includes two VDD and two VSS supply cells. Datasheet guidance indicates this is sufficient for slew-rate controlled IO cells, but may be inadequate for non-controlled slew-rate cells. Calculations assume 20 pins switching simultaneously, 15 pF load, and 5.4 nH bond wire inductance (20 µm diameter, 4 mm length).
-- The `PDUW0812SCDG` cell is chosen for its lower drive strength, reducing noise on power lines during simultaneous IO switching.
+- The `PDUW0408SCDG` cell is chosen for its lower drive strength, reducing noise on power lines during simultaneous IO switching.
 - ESD protection is integrated into the pads and is most effective when pads are connected in a ring.
 
 ## IO Placement File
