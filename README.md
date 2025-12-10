@@ -75,7 +75,7 @@ Follow these guidelines during the Place and Route flow:
 
 ### DRC and LVS
 The layout must pass DRC (Design Rule Check) to be accepted for tapeout by the foundry. While a clean LVS (Layout Versus Schematic) is not required by the foundry, it is mandatory for your design to be eligible for fabrication.  
-Refer to the [`Signoff guide`](./docs/drc_lvs-guide.md) for instructions on performing DRC and LVS checks.
+Refer to the [`Signoff guide`](./docs/drc_lvs_guide.md) for instructions on performing DRC and LVS checks.
 
 Once these checks are complete, you can export the final GDSII file for tapeout.
 
