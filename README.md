@@ -72,6 +72,14 @@ Follow these guidelines during the Place and Route flow:
       ```
 - Modify and extend the script as required by the design.
 
+
+### DRC and LVS
+The layout must pass DRC (Design Rule Check) to be accepted for tapeout by the foundry. While a clean LVS (Layout Versus Schematic) is not required by the foundry, it is mandatory for your design to be eligible for fabrication.  
+Refer to the [`Signoff guide`](./docs/drc_lvs-guide.md) for instructions on performing DRC and LVS checks.
+
+Once these checks are complete, you can export the final GDSII file for tapeout.
+
+
 ---
 ### Deliverables
 ---
@@ -82,8 +90,8 @@ Deliverables must include the following:
 1. A `README.md` file in the root directory that briefly describe what your team has achieved. This is a **joint statement** for the team. 
 2. Each individual's **personal statement** explaining what you contributed, reflection about what you have learned in this project, mistakes you have made, special design decisons, and what you might do differently if you were to do it again or have more time.  This statement must be succinct and to the point, yet must include sufficient details for me to check against the commit history of the repo so that any claims can be verified. Including links to a selection of specific commits which demonstrate your work would be most helpful. If you work with another member of your group on a module, make sure to give them [co-author credit](https://docs.github.com/en/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/creating-a-commit-with-multiple-authors#creating-co-authored-commits-on-the-command-line). Additionally, try to make meaningful commit messages.
 3. A folder called `rtl` with the source of your processor. If you have multiple versions due to the stretched goals, you may use multiple branches. Your `README.md` file must provide sufficient explanation for me to understand what you have done and how to find your work on all branches you wish to be assessed.  The `rtl` folder should also include a `README.md` file listing who wrote which module/file.
-4. A folder called 'veification' which includes everything required to verify your team's design by running ONLY scripts.  You should also include evidence of your chip working as intended.  This should also include test vector files to be submitted with the design for post-fabrication check by TSMC or IMEC.
-5. A detailed test plan - assuming that your team's design is fabricated adn returned in late May or early June, how will this chip be tested either by your team or by another team.
+4. A folder called 'verification' which includes everything required to verify your team's design by running ONLY scripts.  You should also include evidence of your chip working as intended.  This should also include test vector files to be submitted with the design for post-fabrication check by TSMC or IMEC.
+5. A detailed test plan - assuming that your team's design is fabricated and returned in late May or early June, how will this chip be tested either by your team or by another team.
 6. A folder called 'tapeout' which includes the final GDSII file needed to be sent to IMEC/Europractice for tapeout. This GDSII file must be extracted from Virtuoso **after** the design has passed DRC and LVS checks with Calibre. 
 
 
