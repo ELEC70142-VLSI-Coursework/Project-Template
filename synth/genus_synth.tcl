@@ -13,7 +13,7 @@
 ####################################################################
 
 # Design name should match the top-level module name in the HDL file.
-s
+
 set HDL_FILES [list yourfiles.sv]
 set _HDL_DIRECTORY ./SRC
 set DESIGN YOUR_DESIGN_TOP_MODULE_NAME 
@@ -182,4 +182,5 @@ time_info FINAL
 puts "============================"
 puts "Synthesis Finished ........."
 puts "============================"
+
 
