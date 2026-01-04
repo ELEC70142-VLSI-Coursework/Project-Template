@@ -30,7 +30,7 @@ set init_lef_file { \
     /usr/local/cadence/kits/tsmc/beLibs/65nm/TSMCHOME/digital/Back_End/lef/tcbn65lpbwp7t_141a/lef/tcbn65lpbwp7t_9lmT2.lef \
     /usr/local/cadence/kits/tsmc/beLibs/65nm/TSMCHOME/digital/Back_End/lef/tphn65lpnv2od3_sl_200b/mt_2/9lm/lef/tphn65lpnv2od3_sl_9lm.lef \
     /usr/local/cadence/kits/tsmc/beLibs/65nm/TSMCHOME/digital/Back_End/lef/tpbn65v_200b/wb/9m/9M_6X2Z/lef/tpbn65v_9lm.lef \
-    ../PLL/PLL_25M_400M.lef
+    ../PLL/PLL_25M_400M.lef \
     }
 set init_mmmc_file "./DATA/mmmc_timing.tcl"
 
@@ -49,10 +49,21 @@ loadFPlan ./DATA/floorplan/floorplan.fp
 ## Floorplan Setup  
 #####################################################################
 
+# # If you need to place macros, delete the well taps and the special nets then
+# # place the macros and re-add well taps and special nets afterwards.
 
-# Place macro instances here 
-# Example:
-# placeInstance TOP/<mydesign>/memory_inst x y orientation
+# deleteInst welltap*
+# editDelete -area {103 103 896 896} -type Special
+
+# # Place macro instances here 
+# # Example:
+# # placeInstance TOP/<mydesign>/memory_inst x y orientation
+
+# addRing -around each_block -type block_rings -width 3 -spacing 2 -offset 1 -layer {top M1 bottom M1 left M2 right M2} -nets { VSS VDD }
+# addHaloToBlock 10 10 10 10 -allBlock
+
+# addWellTap -cell TAPCELLBWP7T -prefix welltap -cellInterval 60 -checkerBoard
+# sroute -nets { VSS VDD} -allowJogging true -allowLayerChange true -blockPin useLef -connect {blockPin padPin padRing corePin floatingStripe } -padPinPortConnect {allGeom}
 
 
 # Define power and ground connections

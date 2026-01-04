@@ -71,6 +71,12 @@ Follow these guidelines during the Place and Route flow:
       create_clock -name "pll_clk" -period 3.0 -waveform {0.0 1.5} [get_pins pll/f_out]
       ```
 - Modify and extend the script as required by the design.
+    - If your design includes macros such as SRAM and you encounter placement issues (e.g., macros interfering with the floorplan or power rails), follow this recommended sequence:
+        1. Delete existing power rails and well taps.
+        2. Place the macros (e.g., SRAM blocks) in the desired locations.
+        3. Add power rings and halos around the macros as needed.
+        4. Re-insert well taps and recreate power rails.
+      The `innovus_pnr.tcl` script contains commented commands for these steps—uncomment and adjust them as required for your design.
 
 
 ### DRC and LVS
