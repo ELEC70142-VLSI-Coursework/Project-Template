@@ -29,7 +29,7 @@ set init_top_cell ${DESIGN}
 set init_lef_file { \
     /usr/local/cadence/kits/tsmc/beLibs/65nm/TSMCHOME/digital/Back_End/lef/tcbn65lpbwp7t_141a/lef/tcbn65lpbwp7t_9lmT2.lef \
     /usr/local/cadence/kits/tsmc/beLibs/65nm/TSMCHOME/digital/Back_End/lef/tphn65lpnv2od3_sl_200b/mt_2/9lm/lef/tphn65lpnv2od3_sl_9lm.lef \
-    /usr/local/cadence/kits/tsmc/beLibs/65nm/TSMCHOME/digital/Back_End/lef/tpbn65v_200b/wb/9m/9M_6X2Z/lef/tpbn65v_9lm.lef \
+    /usr/local/cadence/kits/tsmc/beLibs/65nm/TSMCHOME/digital/Back_End/lef/tpbn65v_200b/cup/9m/9M_6X1Z1U/lef/tpbn65v_9lm.lef \
     ../PLL/PLL_25M_400M.lef \
     }
 set init_mmmc_file "./DATA/mmmc_timing.tcl"
@@ -61,6 +61,7 @@ loadFPlan ./DATA/floorplan/floorplan.fp
 
 # addRing -around each_block -type block_rings -width 3 -spacing 2 -offset 1 -layer {top M1 bottom M1 left M2 right M2} -nets { VSS VDD }
 # addHaloToBlock 10 10 10 10 -allBlock
+# deleteHaloFromBlock BPAD*
 
 # addWellTap -cell TAPCELLBWP7T -prefix welltap -cellInterval 60 -checkerBoard
 # sroute -nets { VSS VDD} -allowJogging true -allowLayerChange true -blockPin useLef -connect {blockPin padPin padRing corePin floatingStripe } -padPinPortConnect {allGeom}
