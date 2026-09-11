@@ -1,0 +1,80 @@
+####################################################################
+#
+#  Fast checks on every push and pull request to main.
+#
+#  Author:   Sne Samal
+#  Date:     2026-09-11
+#  Version:  1.1
+#
+#  A template. Copy to .github/workflows/ and fill in the places
+#  marked TODO. Everything here should finish in minutes; anything
+#  slower belongs in nightly.yml. See docs/ci_cd.md.
+#
+####################################################################
+
+name: checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  checks:
+    # TODO 1: the label you gave your runner. A label that matches no
+    # runner leaves the job queued forever with no error message.
+    runs-on: [self-hosted, team-00]
+
+    # A stuck tool holds the runner and blocks your whole team.
+    timeout-minutes: 30
+
+    # Supersede an older run on the same branch rather than queue
+    # behind it.
+    concurrency:
+      group: checks-${{ github.ref }}
+      cancel-in-progress: true
+
+    env:
+      # TODO 2: the directory holding setup.cshrc, on the server.
+      SYN_TOOLS_DIR: /home/YOUR_USER/Labs/vlsi-tooling
+      SYN_KIT: tsmc65LP
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Where am I running
+        run: |
+          hostname
+          whoami
+          df -h "$HOME" | tail -1
+
+      # Proves the bash to tcsh bridge works before anything depends
+      # on it. If this fails, nothing below is worth debugging.
+      - name: Tools resolve
+        run: scripts/eda_run fc_shell -version
+
+      # TODO 3: anything the flow needs that is not in the repository,
+      # such as memory compiler outputs, which are under NDA. Link them
+      # in from a directory on the server, or delete this step.
+      - name: Vendor views
+        run: |
+          echo "TODO: ln -sfn /home/YOUR_USER/vendor/* ."
+
+      # TODO 4: your own fast checks, each as
+      #     run: scripts/eda_run make TARGET
+      # Remember that EDA tools exit 0 with errors in the log: a check
+      # that cannot fail is not a check, so read the reports too.
+      - name: Project checks
+        run: |
+          echo "Nothing wired up yet."
+          echo "Replace this step with your own."
+
+      - name: Keep the reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: checks-reports-${{ github.run_number }}
+          path: reports/
+          retention-days: 14
+          if-no-files-found: ignore
