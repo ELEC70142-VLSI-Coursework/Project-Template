@@ -1,0 +1,74 @@
+#!/bin/bash
+#############################################################
+#
+#  eda_run - run one command inside the Synopsys environment.
+#
+#  Author:   Sne Samal
+#  Date:     2026-09-01
+#  Version:  1.0
+#
+#  Bridges a bash CI step into the tcsh environment that
+#  tools/setup.cshrc builds, then runs the command given to it.
+#
+#############################################################
+#
+#    eda_run fc_shell -version
+#    eda_run make sim-rtl
+#
+#  Reads two variables:
+#    SYN_TOOLS_DIR   directory holding setup.cshrc  (required)
+#    SYN_KIT         PDK to load                    (default tsmc65LP)
+#
+#  Why this exists: 'tools/syn' ends in an interactive tcsh, which
+#  would hang a CI job forever. setup.cshrc can be sourced directly
+#  instead, which is what this does.
+#
+#############################################################
+
+set -uo pipefail
+
+TOOLS_DIR="${SYN_TOOLS_DIR:-}"
+KIT="${SYN_KIT:-tsmc65LP}"
+
+if [ "$#" -eq 0 ]; then
+    echo "usage: eda_run <command> [args...]" >&2
+    exit 1
+fi
+
+if [ -z "$TOOLS_DIR" ]; then
+    echo "eda_run: SYN_TOOLS_DIR is not set." >&2
+    echo "         Point it at the directory holding setup.cshrc." >&2
+    exit 1
+fi
+
+if [ ! -f "$TOOLS_DIR/setup.cshrc" ]; then
+    echo "eda_run: no setup.cshrc under $TOOLS_DIR" >&2
+    exit 1
+fi
+
+if ! command -v tcsh >/dev/null 2>&1; then
+    echo "eda_run: tcsh not found. The Synopsys environment needs it." >&2
+    exit 1
+fi
+
+# The command is written to a file rather than pasted into the tcsh
+# string, so arguments containing spaces or quotes survive the trip.
+cmd_file="$(mktemp "${TMPDIR:-/tmp}/eda_run.XXXXXX")"
+trap 'rm -f "$cmd_file"' EXIT
+printf '%q ' "$@" > "$cmd_file"
+
+# setup.cshrc reports an error by echoing and carrying on, because a
+# sourced csh script cannot exit. SYN_ENV_LOADED is the only reliable
+# signal that it worked, so it is checked before the command runs.
+tcsh -c "setenv SYN_TOOLS_DIR '$TOOLS_DIR'; \
+         setenv SYN_KIT '$KIT'; \
+         source '$TOOLS_DIR/setup.cshrc'; \
+         if ( ! \$?SYN_ENV_LOADED ) exit 1; \
+         exec bash '$cmd_file'"
+rc=$?
+
+if [ "$rc" -ne 0 ]; then
+    echo "eda_run: command exited with status $rc" >&2
+fi
+
+exit "$rc"

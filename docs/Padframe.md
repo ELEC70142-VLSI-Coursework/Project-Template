@@ -91,7 +91,7 @@ For this design, the IO placement file used is `scripts/support/chip_pads.io`.
 
 
 ## References
-[IO Application Note]: ("/usr/local/cadence/kits/tsmc/65n_LP/doc/LIBS/TSMC Slim IO General Application Note_1_.pdf")
-[IO Standard Cells Datasheet]: (/usr/local/cadence/kits/tsmc/beLibs/65nm/TSMCHOME/digital/Documentation/documents/tphn65lpnv2od3_sl_200b/DB_TPHN65LPNV2OD3_SL_TC.pdf)
-[Bondpad library release note]: (/usr/local/cadence/kits/tsmc/beLibs/65nm/TSMCHOME/digital/Documentation/release_note/RN_TPBN65V_200B.pdf "RN_TPBN65V_200B.pdf")
+[IO Application Note]: ($TSMC65_PDK/doc/LIBS/TSMC%20Slim%20IO%20General%20Application%20Note_1_.pdf "on ee-mill2, with the PDK loaded")
+[IO Standard Cells Datasheet]: ($TSMC65_HOME/Documentation/documents/tphn65lpnv2od3_sl_200b/DB_TPHN65LPNV2OD3_SL_TC.pdf)
+[Bondpad library release note]: ($TSMC65_HOME/Documentation/release_note/RN_TPBN65V_200B.pdf "RN_TPBN65V_200B.pdf")
 

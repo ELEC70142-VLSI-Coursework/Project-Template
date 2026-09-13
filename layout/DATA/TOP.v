@@ -36,6 +36,16 @@ wire [24:0] gpio_pullen;    // GPIO pull-up enable signals
 wire [24:0] gpio_dir;       // GPIO direction signals
 wire [24:0] gpio_in;        // GPIO input signals from pads
 
+// Analog bias from the PVDD2ANA pads to the PLL. Signal nets, not
+// supplies: the PLL LEF declares both pins USE SIGNAL.
+wire pll_bias_1;
+wire pll_bias_2;
+
+// VDD and VSS are deliberately absent. Supplies are not wired in this
+// netlist: connect_pg_net makes every power and ground connection in
+// the tool, the way globalNetConnect did under Innovus. Naming them
+// here creates signal nets that the power plan then builds on.
+
 
 // assign clk = clk_sel ? pll_clk : clk_ext;
 CKMUX2D1BWP7T clk_mux(.I0 (clk_ext), .I1 (pll_clk), .S (clk_sel),
@@ -158,10 +168,8 @@ PLL_25M_400M pll(
     .f_out(pll_clk), 
     .div_sel(pll_select),
     .CP_20u_Bias(pll_bias_1),
-    .CP_OP_1u_bias(pll_bias_2),
-    .DVDD(VDD),  // Digital VDD
-    .VSS(VSS),
-    .VDD(VDD)   
+    .CP_OP_1u_bias(pll_bias_2)
+    // DVDD, VDD and VSS are connected by scripts/powerplan.tcl.
 );
 
 
@@ -225,16 +233,16 @@ PVDD2ANA PLL_BIAS_2(.AVDD(pll_bias_2));  // PLL Bias 2
 
 
 // POWER AND GROUND PADS
-PVDD1CDG vdd_core_1 (.VDD(VDD));  // Core power supply
-PVDD1CDG vdd_core_2 (.VDD(VDD));  // Core power supply
+PVDD1CDG vdd_core_1 ();           // Core power supply
+PVDD1CDG vdd_core_2 ();           // Core power supply
 
 PVDD2CDG vdd_io_1 ();             // I/O Power Supply
 PVDD2CDG vdd_io_2 ();             // I/O Power Supply
 
 PVDD2POC vdd_poc ();              // Power-On-Control
 
-PVSS3CDG vss_1 (.VSS(VSS));       // Ground
-PVSS3CDG vss_2 (.VSS(VSS));       // Ground
+PVSS3CDG vss_1 ();                // Ground
+PVSS3CDG vss_2 ();                // Ground
 
 
 

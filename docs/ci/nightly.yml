@@ -1,0 +1,97 @@
+####################################################################
+#
+#  Nightly run of the whole flow, with the results kept on the
+#  server.
+#
+#  Author:   Sne Samal
+#  Date:     2026-09-11
+#  Version:  1.1
+#
+#  A template. Copy to .github/workflows/ and fill in the places
+#  marked TODO. See docs/ci_cd.md.
+#
+####################################################################
+
+name: nightly
+
+on:
+  schedule:
+    # TODO 1: pick an hour no other team is using. UTC.
+    - cron: '0 2 * * *'
+  # Run it by hand from the Actions tab, so a change to this file
+  # can be tested today rather than tomorrow.
+  workflow_dispatch:
+
+jobs:
+  chip:
+    # TODO 2: your runner label, the same as in checks.yml.
+    runs-on: [self-hosted, team-00]
+
+    timeout-minutes: 480
+
+    # Never cancel a half finished layout, never start a second one.
+    concurrency:
+      group: nightly
+      cancel-in-progress: false
+
+    env:
+      # TODO 3: the directory holding setup.cshrc, on the server.
+      SYN_TOOLS_DIR: /home/YOUR_USER/Labs/vlsi-tooling
+      SYN_KIT: tsmc65LP
+      # Results stay on the server; a layout is far too big for GitHub.
+      RUNS_DIR: /home/YOUR_USER/nightly_runs
+      KEEP_RUNS: 7
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Tools resolve
+        run: scripts/eda_run fc_shell -version
+
+      # TODO 4: as in checks.yml, or delete this step.
+      - name: Vendor views
+        run: |
+          echo "TODO: ln -sfn /home/YOUR_USER/vendor/* ."
+
+      # TODO 5: the flow, one step per stage so that a failure names
+      # the stage without opening a log. Each one looks like
+      #
+      #   - name: Synthesis
+      #     run: scripts/eda_run make TARGET
+      #
+      - name: Flow
+        run: |
+          echo "Nothing wired up yet."
+          echo "Add your stages here."
+
+      # The most important step in this file. Fusion Compiler exits 0
+      # with a log full of errors, so a nightly that is always green
+      # is telling you nothing. Decide what counts as failure for your
+      # flow and enforce it here: grep the logs, or read the worst
+      # slack out of the timing report and fail if it is negative.
+      - name: Did it actually work
+        if: always()
+        run: |
+          echo "TODO: check the logs and reports, not the exit codes."
+          exit 1
+
+      # Without this your home directory fills up and the runs stop.
+      - name: Keep the results on the server
+        if: always()
+        run: |
+          dir="$RUNS_DIR/$(date +%Y-%m-%d_%H-%M-%S)"
+          mkdir -p "$dir"
+          cp -r reports logs "$dir"/ 2>/dev/null || true
+          # TODO 6: the outputs worth keeping, such as the GDS.
+          cd "$RUNS_DIR" && ls -1dt */ | tail -n +$((KEEP_RUNS + 1)) | xargs -r rm -rf
+          du -sh "$RUNS_DIR"
+
+      # Small text reports only. Anything large stays on the server.
+      - name: Keep the reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightly-reports-${{ github.run_number }}
+          path: reports/
+          retention-days: 14
+          if-no-files-found: ignore

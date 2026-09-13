@@ -1,1 +1,41 @@
-verilog_convert.tcl
+
+# Test vehicle only. The rvcpu SoC is used to prove the flow works and
+# is deliberately not part of the template, so that teams choose their
+# own design. rtl/ is theirs, and tracked.
+rvcpu/
+
+# Memory compiler output. Vendor views, generated per design, never
+# committed.
+ts*n65*/
+
+# Built reference libraries and flow outputs.
+PLL/NDM/
+work/
+outputs/
+reports/
+logs/
+
+# Tool droppings.
+*_command.log
+fc_output.txt
+FM_WORK/
+*_formal_equivalence/
+formality.log
+
+# Self hosted runner. Its .credentials file is a token to this repository.
+actions-runner/
+_work/
+.credentials*
+.runner
+
+# Simulation.
+sim/
+csrc/
+simv
+simv.daidir/
+ucli.key
+*.vcd
+*.fsdb*
+verdiLog/
+novas*
+DVEfiles/
